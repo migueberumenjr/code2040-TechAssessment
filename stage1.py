@@ -1,5 +1,5 @@
-from json
-from requests
+import json
+import requests
 
 '''
 This script will POST my JSON object to the registration endpoint for the API challenge

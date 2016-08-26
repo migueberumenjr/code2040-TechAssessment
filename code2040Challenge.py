@@ -38,10 +38,30 @@ def stage3(token):
     needDic = {"token": token, "needle": needle}
     needVal = requests.post("http://challenge.code2040.org/api/haystack/validate", json=needDic)
     print(needVal.text)
+
+def stage4(token):
+    tokDic = {"token": token}
+    preRes = requests.post("http://challenge.code2040.org/api/prefix", json=tokDic)
+    preDic = json.loads(preRes.text)
+
+    strings = preDic["array"]
+    #print(strings)
+    #print(preDic["prefix"])
+    preArray = []
+
+    for word in strings:
+        if preDic["prefix"] not in word:
+            preArray.append(word)
+
+    #print(preArray)
+    wordsDic = {"token": token, "array": preArray}
+    preVal = requests.post("http://challenge.code2040.org/api/prefix/validate", json=wordsDic)
+    print(preVal.text)
     
 def main():
     token = stage1()
     stage2(token)
     stage3(token)
+    stage4(token)
 
 main()

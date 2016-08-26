@@ -24,8 +24,24 @@ def stage2(token):
     strVal = requests.post("http://challenge.code2040.org/api/reverse/validate", json=strDic)
     print(strVal.text)
 
+def stage3(token):
+    tokDic = {"token": token}
+    needRes = requests.post("http://challenge.code2040.org/api/haystack", json=tokDic)
+    hayDic = json.loads(needRes.text)
+    
+    haystack = hayDic["haystack"]
+
+    for index in range(len(haystack)):
+        if hayDic["needle"] == haystack[index]:
+            needle = index
+            break;
+    needDic = {"token": token, "needle": needle}
+    needVal = requests.post("http://challenge.code2040.org/api/haystack/validate", json=needDic)
+    print(needVal.text)
+    
 def main():
     token = stage1()
     stage2(token)
+    stage3(token)
 
 main()

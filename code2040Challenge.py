@@ -2,7 +2,7 @@
 Author: Miguel Angel Berumen Jr
 Email: maberume@ucsc.edu
 2nd email: migueberumenjr@gmail.com
-Purpose: Code2040 Technical Assessment for the 2017 Fellows
+Purpose: Code2040 Technical Assessment for the 2017 Fellows Program
 '''
 #These modules are required for each step in the challenge
 import json

@@ -1,5 +1,7 @@
 import json
 import requests
+import datetime
+import iso8601
 
 def stage1():
     '''
@@ -15,10 +17,10 @@ def stage2(token):
     tokDic = {"token": token}
     strRes = requests.post("http://challenge.code2040.org/api/reverse", json=tokDic)
 
-    print(strRes.text)
+    #print(strRes.text)
     strText = strRes.text
     revStr = strText[::-1]
-    print(revStr)
+    #print(revStr)
 
     strDic = {"token": token, "string": revStr}
     strVal = requests.post("http://challenge.code2040.org/api/reverse/validate", json=strDic)
@@ -57,11 +59,36 @@ def stage4(token):
     wordsDic = {"token": token, "array": preArray}
     preVal = requests.post("http://challenge.code2040.org/api/prefix/validate", json=wordsDic)
     print(preVal.text)
+
+def stage5(token):
+    tokDic = {"token": token}
+    dateRes = requests.post("http://challenge.code2040.org/api/dating", json=tokDic)
+    dateDic = json.loads(dateRes.text)
+
+    date = str(dateDic["datestamp"])
+    seconds = str(dateDic["interval"])
+    intConv = datetime.timedelta(seconds=int(seconds))
+    #print(date)
+    #print(seconds)
+    #print(intConv)
+
+    parseDate = iso8601.parse_date(date)
+    updateTime = parseDate + intConv
+    #print(parseDate)
+    #print(updateTime)
+
+    dateUpdate = updateTime.strftime("%Y-%m-%dT%H:%M:%SZ")
+    #print(dateUpdate)
+
+    newDateDic = {"token": token, "datestamp": dateUpdate}
+    dateVal = requests.post("http://challenge.code2040.org/api/dating/validate", json=newDateDic)
+    print(dateVal.text)
     
 def main():
     token = stage1()
     stage2(token)
     stage3(token)
     stage4(token)
+    stage5(token)
 
 main()

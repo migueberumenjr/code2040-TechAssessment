@@ -20,7 +20,7 @@ def stage1():
     token = "a8b4348a10cd839fd0556ed099107e96"
     
     #Create a dicionary with my token and github repo
-    regObj = {"token": token,"github": "https://github.com/migueberumenjr/code2040-TechAssessment/blob/migueberumenjr-step1-1/"}
+    regObj = {"token": token,"github": "https://github.com/migueberumenjr/code2040-TechAssessment"}
     
     #POST my dictionary to the registration endpoint and register
     regAPI = requests.post("http://challenge.code2040.org/api/register", json=regObj)
